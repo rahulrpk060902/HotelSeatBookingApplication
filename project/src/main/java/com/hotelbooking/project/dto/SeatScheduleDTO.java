@@ -10,15 +10,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-public class HotelBookingResponseDTO {
+public class SeatScheduleDTO {
 
-    private UUID bookingId;
-    private String tableName;
-    private Integer seatNumber;
-    private LocalDateTime bookedAt;
-    private String userName;
-    private String userEmail;
-    private String userPhone;
+    private UUID scheduleId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 }

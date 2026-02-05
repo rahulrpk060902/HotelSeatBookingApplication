@@ -8,23 +8,21 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "bookings")
 @Getter
 @Setter
-public class Booking {
+public class SeatSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private SeatSchedule seatSchedule;
-
-    private LocalDateTime bookedAt;
+    @ManyToOne
+    private Seat seat;
 
     private LocalDateTime startTime;
+
     private LocalDateTime endTime;
+
+    private Boolean booked = false;
+
 }

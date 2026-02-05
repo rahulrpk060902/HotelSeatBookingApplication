@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
 import jakarta.persistence.LockModeType;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +20,13 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
     Optional<Seat> lockSeatById(UUID seatId);
 
     @Query("""
-        SELECT b FROM Booking b
-        WHERE b.seat.hotel.id = :hotelId
-        ORDER BY b.bookedAt DESC
+    SELECT b FROM Booking b
+    JOIN b.seatSchedule ss
+    JOIN ss.seat s
+    WHERE s.hotel.id = :hotelId
     """)
-    List<Booking> findBookingsByHotelId(UUID hotelId);
+    List<Booking> findBookingsByHotelId(@Param("hotelId") UUID hotelId);
+
 
     @Query("""
         SELECT b FROM Booking b

@@ -1,10 +1,9 @@
 package com.hotelbooking.project.controller;
 
-import com.hotelbooking.project.dto.CreateSeatRequest;
-import com.hotelbooking.project.dto.SeatResponse;
-import com.hotelbooking.project.dto.SeatResponseDTO;
+import com.hotelbooking.project.dto.*;
 import com.hotelbooking.project.service.SeatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -20,27 +19,29 @@ public class SeatController {
     private final SeatService seatService;
 
     @PostMapping
-    public ResponseEntity<String> createSeat(
+    public ApiResponse<String> createSeat(
             Authentication authentication,
             @RequestBody CreateSeatRequest request) {
-
-        String email = authentication.getName(); // ← EMAIL
+        String email = authentication.getName();
         seatService.createSeat(email, request);
-
-        return ResponseEntity.ok("Seat created successfully");
+        return new ApiResponse<>("Seat created successfully", null);
     }
+
 
     @GetMapping
-    public ResponseEntity<List<SeatResponse>> getSeats(
-            Authentication authentication) {
-
+    public ApiResponse<List<SeatResponse>> getSeats(Authentication authentication) {
         String email = authentication.getName();
-        return ResponseEntity.ok(seatService.getSeatsByHotel(email));
+        List<SeatResponse> seats = seatService.getSeatsByHotel(email);
+        return new ApiResponse<>("Seats fetched successfully", seats);
     }
 
+
     @GetMapping("/all-available-seats")
-    public ResponseEntity<List<SeatResponseDTO>> getAvailableSeats() {
-        return ResponseEntity.ok(seatService.getAllAvailableSeats());
+    public ApiResponse<List<AvailableSeatDTO>> getAvailableSeats() {
+
+        List<AvailableSeatDTO> seats = seatService.getAllAvailableSeats();
+
+        return new ApiResponse<>("Available seats fetched successfully", seats);
     }
 }
 

@@ -1,6 +1,7 @@
 package com.hotelbooking.project.service;
 
 
+import com.hotelbooking.project.dto.AvailableSeatDTO;
 import com.hotelbooking.project.dto.CreateSeatRequest;
 import com.hotelbooking.project.dto.SeatResponse;
 import com.hotelbooking.project.dto.SeatResponseDTO;
@@ -14,5 +15,5 @@ public interface SeatService {
 
     List<SeatResponse> getSeatsByHotel(String hotelEmail);
 
-    List<SeatResponseDTO> getAllAvailableSeats();
+    List<AvailableSeatDTO> getAllAvailableSeats();
 }

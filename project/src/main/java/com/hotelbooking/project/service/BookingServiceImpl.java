@@ -2,15 +2,9 @@ package com.hotelbooking.project.service;
 
 import com.hotelbooking.project.dto.HotelBookingResponseDTO;
 import com.hotelbooking.project.dto.UserBookingResponseDTO;
-import com.hotelbooking.project.entity.Booking;
-import com.hotelbooking.project.entity.Hotel;
-import com.hotelbooking.project.entity.Seat;
-import com.hotelbooking.project.entity.User;
+import com.hotelbooking.project.entity.*;
 import com.hotelbooking.project.exception.BusinessException;
-import com.hotelbooking.project.repository.BookingRepository;
-import com.hotelbooking.project.repository.HotelRepository;
-import com.hotelbooking.project.repository.SeatRepository;
-import com.hotelbooking.project.repository.UserRepository;
+import com.hotelbooking.project.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,64 +21,78 @@ public class BookingServiceImpl implements BookingService {
     private final UserRepository userRepository;
     private final HotelRepository hotelRepository;
     private final EmailService emailService;
+    private final SeatScheduleRepository seatScheduleRepository;
 
-    @Override
     @Transactional
-    public void bookSeat(String userEmail, UUID seatId) {
+    @Override
+    public void bookSeat(String userEmail, UUID scheduleId) {
 
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Seat seat = bookingRepository.lockSeatById(seatId)
-                .orElseThrow(() -> new RuntimeException("Seat not found"));
+        SeatSchedule schedule = seatScheduleRepository
+                .lockById(scheduleId)
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
 
-        if (!seat.getAvailable()) {
-            throw new BusinessException("Seat already booked");
+        if (schedule.getBooked()) {
+            throw new BusinessException("Seat already booked for this time slot");
         }
 
-        seat.setAvailable(false);
+        // 1️⃣ Mark schedule as booked
+        schedule.setBooked(true);
+        seatScheduleRepository.save(schedule); // ✅ IMPORTANT
 
+        // 2️⃣ Create booking
         Booking booking = new Booking();
         booking.setUser(user);
-        booking.setSeat(seat);
+        booking.setSeatSchedule(schedule);
         booking.setBookedAt(LocalDateTime.now());
 
+        // snapshot
+        booking.setStartTime(schedule.getStartTime());
+        booking.setEndTime(schedule.getEndTime());
+
         bookingRepository.save(booking);
-        try {
-            String subject = "Seat Booking Confirmation";
 
-            String body = """
-            Hello %s,
-
-            Your seat has been booked successfully.
-
-            Hotel: %s
-            Place: %s
-            Table: %s
-            Seat Number: %d
-            Booking Time: %s
-
-            Thank you for choosing us!
-            """.formatted(
-                    user.getName(),
-                    seat.getHotel().getHotelName(),
-                    seat.getHotel().getPlace(),
-                    seat.getTableName(),
-                    seat.getSeatNumber(),
-                    booking.getBookedAt()
-            );
-
-            emailService.sendBookingConfirmation(
-                    user.getEmail(),
-                    subject,
-                    body
-            );
-
-        } catch (Exception e) {
-            // LOG ONLY — DO NOT BREAK BOOKING
-            System.out.println("Email sending failed: " + e.getMessage());
-        }
+        // 3️⃣ Send mail
+        sendMail(user, schedule);
     }
+
+
+    private void sendMail(User user, SeatSchedule schedule) {
+
+        Seat seat = schedule.getSeat();
+
+        String body = """
+    Hello %s,
+
+    Your seat has been booked successfully.
+
+    Hotel: %s
+    Place: %s
+    Table: %s
+    Seat Number: %d
+
+    Start Time: %s
+    End Time: %s
+
+    Thank you!
+    """.formatted(
+                user.getName(),
+                seat.getHotel().getHotelName(),
+                seat.getHotel().getPlace(),
+                seat.getTableName(),
+                seat.getSeatNumber(),
+                schedule.getStartTime(),
+                schedule.getEndTime()
+        );
+
+        emailService.sendBookingConfirmation(user.getEmail(),
+                "Seat Booking Confirmation",
+                body);
+    }
+
+
 
     @Override
     public List<HotelBookingResponseDTO> getHotelBookings(String hotelEmail) {
@@ -96,17 +104,24 @@ public class BookingServiceImpl implements BookingService {
                 bookingRepository.findBookingsByHotelId(hotel.getId());
 
         return bookings.stream()
-                .map(b -> new HotelBookingResponseDTO(
-                        b.getId(),
-                        b.getSeat().getTableName(),
-                        b.getSeat().getSeatNumber(),
-                        b.getBookedAt(),
-                        b.getUser().getName(),
-                        b.getUser().getEmail(),
-                        b.getUser().getPhone()
-                ))
+                .map(b -> {
+                    Seat seat = b.getSeatSchedule().getSeat();
+
+                    return new HotelBookingResponseDTO(
+                            b.getId(),
+                            seat.getTableName(),
+                            seat.getSeatNumber(),
+                            b.getBookedAt(),
+                            b.getUser().getName(),
+                            b.getUser().getEmail(),
+                            b.getUser().getPhone(),
+                            b.getStartTime(),
+                            b.getEndTime()
+                    );
+                })
                 .toList();
     }
+
 
     @Override
     public List<UserBookingResponseDTO> getUserBookings(String userEmail) {
@@ -118,16 +133,22 @@ public class BookingServiceImpl implements BookingService {
                 bookingRepository.findBookingsByUserId(user.getId());
 
         return bookings.stream()
-                .map(b -> new UserBookingResponseDTO(
-                        b.getId(),
-                        b.getSeat().getHotel().getHotelName(),
-                        b.getSeat().getHotel().getPlace(),
-                        b.getSeat().getTableName(),
-                        b.getSeat().getSeatNumber(),
-                        b.getBookedAt()
-                ))
+                .map(b -> {
+                    Seat seat = b.getSeatSchedule().getSeat();
+                    Hotel hotel = seat.getHotel();
+
+                    return new UserBookingResponseDTO(
+                            b.getId(),
+                            hotel.getHotelName(),
+                            hotel.getPlace(),
+                            seat.getTableName(),
+                            seat.getSeatNumber(),
+                            b.getBookedAt()
+                    );
+                })
                 .toList();
     }
+
 
 
 }
