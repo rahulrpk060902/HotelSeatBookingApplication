@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface SeatRepository extends JpaRepository<Seat, UUID> {
@@ -19,4 +20,11 @@ public interface SeatRepository extends JpaRepository<Seat, UUID> {
         ORDER BY s.hotel.hotelName
     """)
     List<Seat> findAllAvailableSeats();
+
+    Optional<Seat> findByHotel_IdAndTableNameAndSeatNumber(
+            UUID hotelId,
+            String tableName,
+            Integer seatNumber
+    );
+
 }

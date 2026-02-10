@@ -23,6 +23,10 @@ public class Hotel {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
+    private  String phone;
+
+
     private String password;
 
     @Enumerated(EnumType.STRING)

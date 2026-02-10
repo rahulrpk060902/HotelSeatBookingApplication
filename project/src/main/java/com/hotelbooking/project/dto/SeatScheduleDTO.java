@@ -15,4 +15,5 @@ public class SeatScheduleDTO {
     private UUID scheduleId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private boolean booked;
 }

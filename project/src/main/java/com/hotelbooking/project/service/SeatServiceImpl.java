@@ -28,20 +28,56 @@ public class SeatServiceImpl implements SeatService {
         Hotel hotel = hotelRepository.findByEmail(hotelEmail)
                 .orElseThrow(() -> new RuntimeException("Hotel not found"));
 
-        Seat seat = new Seat();
-        seat.setHotel(hotel);
-        seat.setTableName(request.getTableName());
-        seat.setSeatNumber(request.getSeatNumber());
+        // 🔒 Validate time
+        if (request.getStartTime().isAfter(request.getEndTime()) ||
+                request.getStartTime().isEqual(request.getEndTime())) {
+            throw new RuntimeException("Invalid time range");
+        }
 
-        seatRepository.save(seat);
+        // 🔍 Check if seat already exists
+        Seat seat = seatRepository
+                .findByHotel_IdAndTableNameAndSeatNumber(
+                        hotel.getId(),
+                        request.getTableName(),
+                        request.getSeatNumber()
+                )
+                .orElse(null);
 
+        if (seat != null) {
+            List<SeatSchedule> overlaps =
+                    seatScheduleRepository.findOverlappingSchedules(
+                            seat.getId(),
+                            request.getStartTime(),
+                            request.getEndTime()
+                    );
+
+            if (!overlaps.isEmpty()) {
+                throw new RuntimeException(
+                        "Seat already exists for the given time range"
+                );
+            }
+        }
+
+        // 🪑 Create seat if not exists
+        if (seat == null) {
+            seat = new Seat();
+            seat.setHotel(hotel);
+            seat.setTableName(request.getTableName());
+            seat.setSeatNumber(request.getSeatNumber());
+            seatRepository.save(seat);
+        }
+
+        // 🕒 Create schedule
         SeatSchedule schedule = new SeatSchedule();
         schedule.setSeat(seat);
         schedule.setStartTime(request.getStartTime());
         schedule.setEndTime(request.getEndTime());
+        schedule.setBooked(false);
 
         seatScheduleRepository.save(schedule);
     }
+
+
 
 
     @Override
@@ -60,16 +96,20 @@ public class SeatServiceImpl implements SeatService {
                             .map(schedule -> new SeatScheduleDTO(
                                     schedule.getId(),
                                     schedule.getStartTime(),
-                                    schedule.getEndTime()
+                                    schedule.getEndTime(),
+                                    schedule.getBooked()
                             ))
                             .toList();
 
+            // ✅ CALCULATE availability from schedules
+            boolean available = schedules.stream()
+                    .noneMatch(SeatScheduleDTO::isBooked);
 
             return new SeatResponse(
                     seat.getId(),
                     seat.getTableName(),
                     seat.getSeatNumber(),
-                    seat.getAvailable(),
+                    available,   // ✅ CORRECT
                     schedules
             );
 

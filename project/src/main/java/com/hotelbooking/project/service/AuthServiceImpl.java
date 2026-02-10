@@ -54,12 +54,16 @@ public class AuthServiceImpl implements AuthService {
         if (hotelRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
+        if(hotelRepository.findByPhone(request.getPhone()).isPresent()){
+            throw new RuntimeException("Phone number already registered");
+        }
 
         Hotel hotel = new Hotel();
         hotel.setHotelName(request.getHotelName());
         hotel.setPlace(request.getPlace());
         hotel.setEmail(request.getEmail());
         hotel.setPassword(passwordEncoder.encode(request.getPassword()));
+        hotel.setPhone(request.getPhone());
 
         hotelRepository.save(hotel);
     }
