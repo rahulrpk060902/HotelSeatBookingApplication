@@ -37,12 +37,12 @@ public class SeatController {
     }
 
 
-    @GetMapping("/all-available-seats")
-    public ApiResponse<List<AvailableSeatDTO>> getAvailableSeats() {
-
-        List<AvailableSeatDTO> seats = seatService.getAllAvailableSeats();
-
-        return new ApiResponse<>("Available seats fetched successfully", seats);
-    }
+//    @GetMapping("/all-available-seats")
+//    public ApiResponse<List<AvailableSeatDTO>> getAvailableSeats() {
+//
+//        List<AvailableSeatDTO> seats = seatService.getAllAvailableSeats();
+//
+//        return new ApiResponse<>("Available seats fetched successfully", seats);
+//    }
 }
 

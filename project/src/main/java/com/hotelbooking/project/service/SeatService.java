@@ -15,5 +15,5 @@ public interface SeatService {
 
     List<SeatResponse> getSeatsByHotel(String hotelEmail);
 
-    List<AvailableSeatDTO> getAllAvailableSeats();
+//    List<AvailableSeatDTO> getAllAvailableSeats();
 }

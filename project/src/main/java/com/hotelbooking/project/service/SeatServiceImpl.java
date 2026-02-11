@@ -116,25 +116,25 @@ public class SeatServiceImpl implements SeatService {
         }).toList();
     }
 
-    @Override
-    public List<AvailableSeatDTO> getAllAvailableSeats() {
-
-        List<SeatSchedule> schedules =
-                seatScheduleRepository.findAllFutureSchedules();
-
-        return schedules.stream()
-                .map(schedule -> new AvailableSeatDTO(
-                        schedule.getId(),
-                        schedule.getSeat().getId(),
-                        schedule.getSeat().getTableName(),
-                        schedule.getSeat().getSeatNumber(),
-                        schedule.getSeat().getHotel().getHotelName(),
-                        schedule.getSeat().getHotel().getPlace(),
-                        schedule.getStartTime(),
-                        schedule.getEndTime()
-                ))
-                .toList();
-    }
+//    @Override
+//    public List<AvailableSeatDTO> getAllAvailableSeats() {
+//
+//        List<SeatSchedule> schedules =
+//                seatScheduleRepository.findAllFutureSchedules();
+//
+//        return schedules.stream()
+//                .map(schedule -> new AvailableSeatDTO(
+//                        schedule.getId(),
+//                        schedule.getSeat().getId(),
+//                        schedule.getSeat().getTableName(),
+//                        schedule.getSeat().getSeatNumber(),
+//                        schedule.getSeat().getHotel().getHotelName(),
+//                        schedule.getSeat().getHotel().getPlace(),
+//                        schedule.getStartTime(),
+//                        schedule.getEndTime()
+//                ))
+//                .toList();
+//    }
 
 
 
