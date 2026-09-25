@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hotel_booking
+    username: postgres
+    password: 123456789
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true  # its initial db
+    locations: classpath:db/migration/postgres
+    table: flyway_schema_history
+    schemas: public
+    default-schema: public
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rpk588416@gmail.com
+    password: zcxqnafeniwparid
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
