@@ -1,0 +1,36 @@
+<div class="booking-container">
+
+  <div *ngIf="bookings.length === 0" class="empty">
+    No bookings yet...
+  </div>
+
+  <table *ngIf="bookings.length > 0">
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Seat</th>
+        <th>User</th>
+        <th>Time</th>
+        <th>Phone</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let b of bookings">
+        <td>{{ b.tableName }}</td>
+        <td>{{ b.seatNumber }}</td>
+        <td>{{ b.userName }}</td>
+        <td>
+          {{ b.startTime | date:'short' }} -
+          {{ b.endTime | date:'short' }}
+        </td>
+        <td>{{ b.userPhone }}</td>
+        <td>
+          <span class="status booked">Booked</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

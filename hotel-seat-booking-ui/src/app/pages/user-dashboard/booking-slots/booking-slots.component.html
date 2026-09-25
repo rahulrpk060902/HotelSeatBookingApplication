@@ -1,0 +1,44 @@
+<div class="booking-container">
+
+  <h2>Available Booking Slots</h2>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    Loading slots...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- No Data -->
+  <div *ngIf="!loading && availableSlots.length === 0">
+    No slots available.
+  </div>
+
+  <!-- Slots List -->
+  <div *ngFor="let slot of availableSlots" class="slot-card">
+
+    <h3>{{ slot.hotelName }}</h3>
+    <p><strong>Place:</strong> {{ slot.place }}</p>
+
+    <hr>
+
+    <p><strong>Table:</strong> {{ slot.tableName }}</p>
+    <p><strong>Seats:</strong> {{ slot.seatNumber }}</p>
+
+    <p>
+      <strong>Time:</strong>
+      {{ slot.startTime | date:'medium' }}
+      -
+      {{ slot.endTime | date:'medium' }}
+    </p>
+
+    <button (click)="bookSlot(slot)">
+      Book Now
+    </button>
+
+  </div>
+
+</div>

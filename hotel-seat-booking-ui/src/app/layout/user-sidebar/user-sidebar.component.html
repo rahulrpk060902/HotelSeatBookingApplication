@@ -1,0 +1,28 @@
+<div class="sidebar">
+
+  <h3 class="menu-title">User Panel</h3>
+
+  <ul>
+    <li routerLink="/user-dashboard/profile"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+      Profile
+    </li>
+
+    <li routerLink="/user-dashboard/booking-slots"
+        routerLinkActive="active">
+      Booking Slots
+    </li>
+
+    <li routerLink="/user-dashboard/view-bookings"
+        routerLinkActive="active">
+      View Bookings
+    </li>
+
+       <li class="logout" (click)="confirmLogout()">
+      Logout
+    </li>
+    
+  </ul>
+
+</div>

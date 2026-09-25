@@ -1,0 +1,101 @@
+/* Full screen layout */
+.home-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Left image (Hotel) */
+.home-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: url('assets/hotel.jpg') no-repeat center/cover;
+  filter: brightness(0.6);
+}
+
+/* Right image (User) */
+.home-container::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: url('assets/user.jpg') no-repeat center/cover;
+  filter: brightness(0.6);
+}
+
+/* Center card */
+.home-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 50px 40px;
+  border-radius: 20px;
+  height: 300px;
+  text-align: center;
+  width: 380px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Title */
+h1 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hotel button */
+.hotel-btn {
+  background: #b75e3a;
+  color: white;
+}
+
+.hotel-btn:hover {
+  background: #b75e3a;
+  transform: scale(1.05);
+}
+
+/* User button */
+.user-btn {
+  background: #4f83dd;
+  color: white;
+}
+
+.user-btn:hover {
+  background: #4f83dd;
+  transform: scale(1.05);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

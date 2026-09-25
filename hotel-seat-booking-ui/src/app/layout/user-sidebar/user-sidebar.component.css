@@ -1,0 +1,38 @@
+.sidebar {
+  width: 300px;
+  height: 95vh;
+  background-color: #2f4156;
+  padding: 20px 15px;
+  color: white;
+}
+
+.menu-title {
+  margin-bottom: 25px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 22px 25px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* Hover */
+li:hover {
+  background-color: #3e556e;
+}
+
+/* Active Menu */
+.active {
+  background-color: #3e556e;
+  font-weight: 500;
+}

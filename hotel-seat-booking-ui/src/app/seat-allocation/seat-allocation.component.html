@@ -1,0 +1,66 @@
+<div class="seat-container">
+
+  <h2>Seat Allocation</h2>
+
+  <!-- Add Seat Form -->
+  <div class="seat-form">
+    <input placeholder="Table Name" [(ngModel)]="seatForm.tableName" />
+    <input type="number" placeholder="Seats" [(ngModel)]="seatForm.seatNumber" />
+    <input
+  type="datetime-local"
+  [(ngModel)]="seatForm.startTime"
+  [min]="minDateTime"
+  (change)="onStartTimeChange()"
+/>
+
+<input
+  type="datetime-local"
+  [(ngModel)]="seatForm.endTime"
+  [min]="seatForm.startTime"
+/>
+
+
+
+    <button (click)="addSeat()">Add Seat</button>
+  </div>
+
+  <div class="seat-list" *ngIf="seats.length > 0"> 
+
+  <h3>Created Seats</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Seat No</th>
+        <th>Available</th>
+        <th>Time Slots</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let seat of seats">
+        <td>{{ seat.tableName }}</td>
+        <td>{{ seat.seatNumber }}</td>
+        <td>
+          <span
+            class="status"
+            [class.available]="seat.available"
+            [class.booked]="!seat.available"
+          >
+            {{ seat.available ? 'Available' : 'Booked' }}
+          </span>
+        </td>
+        <td>
+          <div *ngFor="let s of seat.schedules">
+            {{ s.startTime | date:'short' }} - {{ s.endTime | date:'short' }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+</div>

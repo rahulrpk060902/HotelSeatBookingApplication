@@ -1,0 +1,23 @@
+<div class="signup-page">
+  <div class="signup-card">
+    <h2>User Signup</h2>
+
+    <input type="text" placeholder="Name" [(ngModel)]="signup.name">
+    <input type="text" placeholder="Phone" [(ngModel)]="signup.phone">
+    <input type="email" placeholder="Email" [(ngModel)]="signup.email">
+    <input type="text" placeholder="Place" [(ngModel)]="signup.place">
+    <input type="password" placeholder="Password" [(ngModel)]="signup.password">
+    <input type="password" placeholder="Confirm Password" [(ngModel)]="signup.confirmPassword">
+
+    <button (click)="signupUser()">Sign Up</button>
+
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+    <p>
+      Already have an account?
+      <a routerLink="/user-login">Login</a>
+    </p>
+  </div>
+</div>

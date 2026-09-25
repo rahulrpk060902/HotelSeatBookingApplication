@@ -1,0 +1,75 @@
+<div class="profile-page" *ngIf="!loading && userProfile">
+
+  <h1 class="page-title">Profile</h1>
+
+  <div class="profile-card">
+
+    <!-- VIEW MODE -->
+    <div *ngIf="!editMode" class="profile-grid">
+
+      <div class="row">
+        <label>Name</label>
+        <span>{{ userProfile.name }}</span>
+      </div>
+
+      <div class="row">
+        <label>Email</label>
+        <span>{{ userProfile.email }}</span>
+      </div>
+
+      <div class="row">
+        <label>Phone</label>
+        <span>{{ userProfile.phone }}</span>
+      </div>
+
+      <div class="row">
+        <label>Place</label>
+        <span>{{ userProfile.place }}</span>
+      </div>
+
+      <!-- Edit button inside card -->
+      <div class="button-row">
+        <button class="btn edit-btn" (click)="enableEdit()">Edit</button>
+      </div>
+    </div>
+
+    <!-- EDIT MODE -->
+    <div *ngIf="editMode" class="profile-grid">
+
+      <div class="row">
+        <label>Name</label>
+        <input [(ngModel)]="editProfile.name" />
+      </div>
+
+      <div class="row">
+        <label>Email</label>
+        <input [(ngModel)]="editProfile.email" readonly/>
+        
+      </div>
+
+      <div class="row">
+        <label>Phone</label>
+        <input [(ngModel)]="editProfile.phone" />
+      </div>
+
+      <div class="row">
+        <label>Place</label>
+        <input [(ngModel)]="editProfile.place" />
+      </div>
+
+      <div class="button-row">
+        <button class="btn save-btn" (click)="updateProfile()">Save</button>
+        <button class="btn cancel-btn" (click)="cancelEdit()">Cancel</button>
+      </div>
+
+        <p class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading">
+  Loading profile...
+</div>

@@ -1,0 +1,33 @@
+.booking-container {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th {
+  background: #f5f7fb;
+  text-align: left;
+  font-weight: 600;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.status.booked {
+  color: white;
+  background: #e74c3c;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.empty {
+  padding: 20px;
+  color: #6b7280;
+}

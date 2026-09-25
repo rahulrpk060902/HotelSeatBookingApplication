@@ -1,0 +1,23 @@
+<div class="layout">
+
+  
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+      <h3 class="menu-title">Hotel Panel</h3>
+
+    <a routerLink="profile">Profile</a>
+    <a routerLink="seats">Seat Allocation</a>
+    <a routerLink="bookings">Bookings</a>
+    <a class="logout" (click)="confirmLogout()">
+      Logout
+    </a>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>

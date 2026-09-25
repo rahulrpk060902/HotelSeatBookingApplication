@@ -1,0 +1,29 @@
+<div class="booking-container">
+
+<h2>My Bookings</h2>
+
+<div *ngIf="loading">
+  Loading bookings...
+</div>
+
+<div *ngIf="bookings.length === 0 && !loading">
+  No bookings found.
+</div>
+
+<div *ngFor="let booking of bookings" class="booking-card">
+
+  <h3>{{ booking.hotelName }}</h3>
+
+  <p><strong>Place:</strong> {{ booking.hotelPlace }}</p>
+  <p><strong>Table:</strong> {{ booking.tableName }}</p>
+  <p><strong>Seats:</strong> {{ booking.seatNumber }}</p>
+
+<p>
+  <strong>Time:</strong>
+  {{ booking.startTime | date:'medium' }} -
+  {{ booking.endTime | date:'medium' }}
+</p>
+
+</div>
+
+</div>

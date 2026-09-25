@@ -1,0 +1,96 @@
+/* Full layout */
+.main-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Times New Roman", Times, serif;}
+
+/* LEFT SIDE */
+.left-section {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+/* RIGHT SIDE IMAGE */
+.right-section {
+  width: 60%;
+  height: 100vh;   /* add this */
+  background-size: cover;
+  background-color: #b75e3a;
+}
+
+/* Login card */
+.login-card {
+  background: #ffffff;
+  padding: 50px 40px;
+  width: 500px;
+  height: 500px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Title */
+.login-card h2 {
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* Inputs */
+.login-card input {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: #fff;
+}
+
+/* Button */
+.login-card button {
+  width: 106%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #1abc9c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+.signup-text{
+  text-align: center;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}

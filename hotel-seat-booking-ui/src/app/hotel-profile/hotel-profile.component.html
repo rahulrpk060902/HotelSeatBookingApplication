@@ -1,0 +1,58 @@
+<div class="profile-container">
+
+  <h2>Profile</h2>
+
+  <div *ngIf="profile" class="profile-form">
+
+    <div class="field">
+      <label>Hotel Name</label>
+      <input type="text" [(ngModel)]="profile.hotelName" [readonly]="!isEditMode" />
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="profile.email" readonly />
+    </div>
+
+    <div class="field">
+      <label>Place</label>
+      <input type="text" [(ngModel)]="profile.place" [readonly]="!isEditMode" />
+    </div>
+
+    <div class="field">
+  <label>Phone</label>
+
+  <input type="text"
+         [(ngModel)]="profile.phone"
+         name="phone"
+         #phoneRef="ngModel"
+         [readonly]="!isEditMode"
+         required
+         pattern="^[6-9]\d{9}$" />
+
+  <small class="error"
+         *ngIf="phoneRef.invalid && phoneRef.touched">
+    Enter valid 10 digit phone number
+  </small>
+</div>
+
+  </div>
+
+  <!-- 👇 BUTTONS AT BOTTOM CENTER -->
+  <div class="bottom-actions">
+
+    <button class="btn edit" *ngIf="!isEditMode" (click)="enableEdit()">
+      Edit
+    </button>
+
+    <button class="btn save" *ngIf="isEditMode" (click)="saveProfile()">
+      Save
+    </button>
+
+    <button class="btn cancel" *ngIf="isEditMode" (click)="cancelEdit()">
+      Cancel
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,49 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #2c3e50;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  padding: 18px 15px 20px;
+  margin-bottom: 10px;
+  background: #34495e;
+  border-radius: 6px;
+}
+
+.sidebar a:hover {
+  background: #1abc9c;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+
+.logout {
+  cursor: pointer;
+  color: red;
+}
+
+.logout:hover {
+  opacity: 0.8;
+}
+
+
+.menu-title {
+  margin-bottom: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 10px;
+  color: white;
+}
