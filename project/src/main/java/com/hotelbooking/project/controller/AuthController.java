@@ -35,4 +35,31 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<SignupResponse> forgotPassword(
+            @RequestBody ForgotPasswordRequest request) {
+
+        authService.forgotPassword(request);
+
+        return ResponseEntity.ok(
+                new SignupResponse(
+                        "Temporary password sent to your email"
+                )
+        );
+    }
+
+    // NEW API 2
+    @PostMapping("/reset-password")
+    public ResponseEntity<SignupResponse> resetPassword(
+            @RequestBody ResetPasswordRequest request) {
+
+        authService.resetPassword(request);
+
+        return ResponseEntity.ok(
+                new SignupResponse(
+                        "Password reset successfully"
+                )
+        );
+    }
+
 }
