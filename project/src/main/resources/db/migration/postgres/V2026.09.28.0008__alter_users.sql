@@ -1,0 +1,7 @@
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS reset_password_hash VARCHAR(255),
+ADD COLUMN IF NOT EXISTS reset_password_expiry TIMESTAMP;
+
+ALTER TABLE hotels
+ADD COLUMN IF NOT EXISTS reset_password_hash VARCHAR(255),
+ADD COLUMN IF NOT EXISTS reset_password_expiry TIMESTAMP;

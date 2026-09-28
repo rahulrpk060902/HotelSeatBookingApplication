@@ -14,6 +14,10 @@ import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.co
 import { UserProfileComponent } from './pages/user-dashboard/user-profile/user-profile.component';  
 import { ViewBookingsComponent } from './pages/user-dashboard/view-bookings/view-bookings.component';
 import { BookingSlotsComponent } from './pages/user-dashboard/booking-slots/booking-slots.component';
+import { HotelForgotPasswordComponent } from './pages/hotel-forgot-password/hotel-forgot-password.component';
+import { HotelResetPasswordComponent } from './pages/hotel-reset-password/hotel-reset-password.component';
+import { UserForgotPasswordComponent } from './pages/user-forgot-password/user-forgot-password.component';
+import { UserResetPasswordComponent } from './pages/user-reset-password/user-reset-password.component';
 
 export const routes: Routes = [
 
@@ -24,6 +28,16 @@ export const routes: Routes = [
   { path: 'hotel-login', component: HotelLoginComponent },
 
   { path: 'hotel-signup', component: SignupComponent },
+
+    {
+    path: 'hotel-forgot-password',
+    component: HotelForgotPasswordComponent
+  },
+
+  {
+  path: 'hotel-reset-password',
+  component: HotelResetPasswordComponent
+},
 
   {
     path: 'hotel-dashboard',
@@ -50,6 +64,16 @@ export const routes: Routes = [
     /* USER */
   { path: 'user-login', component: UserLoginComponent },
   { path: 'user-signup', component: UserSignupComponent },
+
+  {
+  path: 'user-forgot-password',
+  component: UserForgotPasswordComponent
+},
+
+{
+  path: 'user-reset-password',
+  component: UserResetPasswordComponent
+},
 
   {
     path: 'user-dashboard',
