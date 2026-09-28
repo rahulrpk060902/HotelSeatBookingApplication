@@ -37,5 +37,44 @@ export class AuthService {
   return this.http.post('http://localhost:8080/api/auth/login', body);
 }
 
+hotelForgotPassword(email: string) {
+
+  return this.http.post(
+    'http://localhost:8080/api/auth/forgot-password',
+    {
+      email: email,
+      role: 'HOTEL'
+    }
+  );
+
+}
+
+hotelResetPassword(request: any) {
+
+  return this.http.post(
+    'http://localhost:8080/api/auth/reset-password',
+    request
+  );
+
+}
+
+
+userForgotPassword(email: string) {
+  return this.http.post(
+    'http://localhost:8080/api/auth/forgot-password',
+    {
+      email: email,
+      role: 'USER'
+    }
+  );
+}
+
+userResetPassword(request: any) {
+  return this.http.post(
+    'http://localhost:8080/api/auth/reset-password',
+    request
+  );
+}
+
 
 }

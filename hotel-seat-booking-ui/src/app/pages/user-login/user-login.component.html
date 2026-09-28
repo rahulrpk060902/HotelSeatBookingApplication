@@ -1,24 +1,73 @@
-<div class="login-container">
+<div class="main-container">
 
-  <div class="login-card">
+  <!-- LEFT SIDE -->
+  <div class="left-section">
 
-    <h2>User Login</h2>
+    <div class="login-card">
 
-    <input [(ngModel)]="email" placeholder="Email" />
+      <h2>User Login</h2>
 
-    <input [(ngModel)]="password" type="password" placeholder="Password" />
+      <div class="form-group">
+        <label>Email</label>
 
-    <button (click)="login()">Login</button>
-    
-    <p class="error-message" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </p>
+        <input
+          [(ngModel)]="email"
+          type="email"
+          placeholder="Enter email"
+        />
+      </div>
 
-    <p class="register-text">
-      Don't have an account?
-      <a routerLink="/user-signup">Sign up</a>
-    </p>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <input
+          [(ngModel)]="password"
+          type="password"
+          placeholder="Enter password"
+        />
+      </div>
+
+
+      <button
+        type="button"
+        (click)="login()"
+      >
+        Login
+      </button>
+
+
+      <!-- Error -->
+      <p
+        class="error-message"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </p>
+
+
+      <!-- Forgot Password -->
+      <p class="forgot-password">
+        <a routerLink="/user-forgot-password">
+          Forgot password?
+        </a>
+      </p>
+
+
+      <!-- Signup -->
+      <p class="register-text">
+        Don’t have an account?
+        <a routerLink="/user-signup">
+          Sign up
+        </a>
+      </p>
+
+    </div>
 
   </div>
+
+
+  <!-- RIGHT SIDE -->
+  <div class="right-section"></div>
 
 </div>
