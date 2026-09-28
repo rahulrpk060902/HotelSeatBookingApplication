@@ -8,4 +8,7 @@ public interface AuthService {
     void registerHotel(HotelSignupRequest request);
     public LoginResponse login(LoginRequest request);
 
+    void forgotPassword(ForgotPasswordRequest request);
+
+    void resetPassword(ResetPasswordRequest request);
 }

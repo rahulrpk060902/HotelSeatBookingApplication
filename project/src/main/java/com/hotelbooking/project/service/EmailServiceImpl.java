@@ -24,5 +24,29 @@ public class EmailServiceImpl implements EmailService {
 
         mailSender.send(message);
     }
+
+
+    public void sendTemporaryPassword(
+            String email,
+            String temporaryPassword) {
+
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(email);
+        message.setSubject("Hotel Booking - Password Reset");
+
+        message.setText(
+                "Hello,\n\n" +
+                        "We received a request to reset your password.\n\n" +
+                        "Your temporary password is:\n\n" +
+                        temporaryPassword + "\n\n" +
+                        "This temporary password is valid for 10 minutes.\n\n" +
+                        "Please use it to create your new password.\n\n" +
+                        "If you did not request this password reset, please ignore this email.\n\n" +
+                        "Hotel Booking Team"
+        );
+
+        mailSender.send(message);
+    }
 }
 

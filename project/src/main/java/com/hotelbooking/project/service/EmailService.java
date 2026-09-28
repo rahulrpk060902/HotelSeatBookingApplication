@@ -6,5 +6,7 @@ public interface EmailService {
             String subject,
             String body
     );
+
+    void sendTemporaryPassword(String email, String temporaryPassword);
 }
 

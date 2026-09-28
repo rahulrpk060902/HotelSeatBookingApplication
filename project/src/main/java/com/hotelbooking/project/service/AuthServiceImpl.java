@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ public class AuthServiceImpl implements AuthService {
     private final HotelRepository hotelRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EmailService emailService;
 
     @Override
     public void registerUser(UserSignupRequest request) {
@@ -112,6 +114,202 @@ public class AuthServiceImpl implements AuthService {
         }
 
         throw new RuntimeException("User not found");
+    }
+    @Override
+    public void forgotPassword(ForgotPasswordRequest request) {
+
+        String email = request.getEmail().trim().toLowerCase();
+        String role = request.getRole().trim().toUpperCase();
+
+        if ("USER".equals(role)) {
+
+            var userOpt = userRepository.findByEmail(email);
+
+            if (userOpt.isEmpty()) {
+                throw new RuntimeException(
+                        "User email is not registered"
+                );
+            }
+
+            User user = userOpt.get();
+
+            String temporaryPassword = generateTemporaryPassword();
+
+            user.setResetPasswordHash(
+                    passwordEncoder.encode(temporaryPassword)
+            );
+
+            user.setResetPasswordExpiry(
+                    LocalDateTime.now().plusMinutes(10)
+            );
+
+            userRepository.save(user);
+
+            emailService.sendTemporaryPassword(
+                    email,
+                    temporaryPassword
+            );
+
+            return;
+        }
+
+
+        if ("HOTEL".equals(role)) {
+
+            var hotelOpt = hotelRepository.findByEmail(email);
+
+            if (hotelOpt.isEmpty()) {
+                throw new RuntimeException(
+                        "Hotel email is not registered"
+                );
+            }
+
+            Hotel hotel = hotelOpt.get();
+
+            String temporaryPassword = generateTemporaryPassword();
+
+            hotel.setResetPasswordHash(
+                    passwordEncoder.encode(temporaryPassword)
+            );
+
+            hotel.setResetPasswordExpiry(
+                    LocalDateTime.now().plusMinutes(10)
+            );
+
+            hotelRepository.save(hotel);
+
+            emailService.sendTemporaryPassword(
+                    email,
+                    temporaryPassword
+            );
+
+            return;
+        }
+
+
+        throw new RuntimeException("Invalid role");
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest request) {
+
+        if (!request.getNewPassword()
+                .equals(request.getConfirmPassword())) {
+
+            throw new RuntimeException("Passwords do not match");
+        }
+
+        String email = request.getEmail();
+
+        // Check User
+        var userOpt = userRepository.findByEmail(email);
+
+        if (userOpt.isPresent()) {
+
+            User user = userOpt.get();
+
+            if (user.getResetPasswordHash() == null) {
+                throw new RuntimeException("No password reset request found");
+            }
+
+            if (user.getResetPasswordExpiry() == null ||
+                    LocalDateTime.now()
+                            .isAfter(user.getResetPasswordExpiry())) {
+
+                throw new RuntimeException(
+                        "Temporary password has expired"
+                );
+            }
+
+            if (!passwordEncoder.matches(
+                    request.getTemporaryPassword(),
+                    user.getResetPasswordHash())) {
+
+                throw new RuntimeException(
+                        "Invalid temporary password"
+                );
+            }
+
+            user.setPassword(
+                    passwordEncoder.encode(
+                            request.getNewPassword()
+                    )
+            );
+
+            // Important: invalidate temporary password
+            user.setResetPasswordHash(null);
+            user.setResetPasswordExpiry(null);
+
+            userRepository.save(user);
+
+            return;
+        }
+
+        // Check Hotel
+        var hotelOpt = hotelRepository.findByEmail(email);
+
+        if (hotelOpt.isPresent()) {
+
+            Hotel hotel = hotelOpt.get();
+
+            if (hotel.getResetPasswordHash() == null) {
+                throw new RuntimeException(
+                        "No password reset request found"
+                );
+            }
+
+            if (hotel.getResetPasswordExpiry() == null ||
+                    LocalDateTime.now()
+                            .isAfter(hotel.getResetPasswordExpiry())) {
+
+                throw new RuntimeException(
+                        "Temporary password has expired"
+                );
+            }
+
+            if (!passwordEncoder.matches(
+                    request.getTemporaryPassword(),
+                    hotel.getResetPasswordHash())) {
+
+                throw new RuntimeException(
+                        "Invalid temporary password"
+                );
+            }
+
+            hotel.setPassword(
+                    passwordEncoder.encode(
+                            request.getNewPassword()
+                    )
+            );
+
+            hotel.setResetPasswordHash(null);
+            hotel.setResetPasswordExpiry(null);
+
+            hotelRepository.save(hotel);
+
+            return;
+        }
+
+        throw new RuntimeException("User not found");
+    }
+
+    private String generateTemporaryPassword() {
+
+        String characters =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                        "abcdefghijklmnopqrstuvwxyz" +
+                        "0123456789";
+
+        SecureRandom random = new SecureRandom();
+
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+
+        return password.toString();
     }
 
 }
