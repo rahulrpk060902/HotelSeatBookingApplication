@@ -18,12 +18,18 @@ export class UserLoginComponent {
   email = '';
   password = '';
   errorMessage = '';
+  showPassword = false;
 
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
+
+   togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
 
   login() {
 

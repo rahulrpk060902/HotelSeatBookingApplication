@@ -180,3 +180,37 @@ button:hover {
     max-width: 600px;
   }
 }
+
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 55px;
+  box-sizing: border-box;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 40%;
+  transform: translateY(-50%);
+
+  width: 40px !important;
+  height: 40px !important;
+
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: none !important;
+
+  font-size: 20px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

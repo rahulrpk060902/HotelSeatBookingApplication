@@ -24,11 +24,22 @@ export class SignupComponent {
   password!: string;
   confirmPassword!: string;
 
+  showPassword = false;
+  showConfirmPassword = false;
+
 
   constructor(private authService: AuthService,
     private router: Router   
 
   ) {}
+
+  togglePassword(): void {
+  this.showPassword = !this.showPassword;
+}
+
+toggleConfirmPassword(): void {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 
   // signup() {
 
