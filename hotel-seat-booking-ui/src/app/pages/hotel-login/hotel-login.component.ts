@@ -18,12 +18,17 @@ export class HotelLoginComponent {
   loginForm!: FormGroup;
   loading = false;
   errorMessage = '';
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {}
+
+  togglePassword(): void {
+  this.showPassword = !this.showPassword;
+}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({

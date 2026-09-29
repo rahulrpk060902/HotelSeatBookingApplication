@@ -1,23 +1,101 @@
 <div class="signup-page">
+
   <div class="signup-card">
+
     <h2>User Signup</h2>
 
-    <input type="text" placeholder="Name" [(ngModel)]="signup.name">
-    <input type="text" placeholder="Phone" [(ngModel)]="signup.phone">
-    <input type="email" placeholder="Email" [(ngModel)]="signup.email">
-    <input type="text" placeholder="Place" [(ngModel)]="signup.place">
-    <input type="password" placeholder="Password" [(ngModel)]="signup.password">
-    <input type="password" placeholder="Confirm Password" [(ngModel)]="signup.confirmPassword">
+    <input
+      type="text"
+      placeholder="Name"
+      [(ngModel)]="signup.name"
+    >
 
-    <button (click)="signupUser()">Sign Up</button>
+    <input
+      type="text"
+      placeholder="Phone"
+      [(ngModel)]="signup.phone"
+    >
 
-    <p class="error-message" *ngIf="errorMessage">
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="signup.email"
+    >
+
+    <input
+      type="text"
+      placeholder="Place"
+      [(ngModel)]="signup.place"
+    >
+
+
+    <!-- PASSWORD -->
+    <div class="password-wrapper">
+
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="Password"
+        [(ngModel)]="signup.password"
+      >
+
+      <button
+        type="button"
+        class="password-toggle"
+        (click)="togglePassword()"
+      >
+        {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+      </button>
+
+    </div>
+
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="password-wrapper">
+
+      <input
+        [type]="showConfirmPassword ? 'text' : 'password'"
+        placeholder="Confirm Password"
+        [(ngModel)]="signup.confirmPassword"
+      >
+
+      <button
+        type="button"
+        class="password-toggle"
+        (click)="toggleConfirmPassword()"
+      >
+        {{ showConfirmPassword ? '👁️' : '👁️‍🗨️' }}
+      </button>
+
+    </div>
+
+
+    <!-- SIGNUP BUTTON -->
+    <button
+      type="button"
+      class="signup-button"
+      (click)="signupUser()"
+    >
+      Sign Up
+    </button>
+
+
+    <!-- ERROR -->
+    <p
+      class="error-message"
+      *ngIf="errorMessage"
+    >
       {{ errorMessage }}
     </p>
 
+
+    <!-- LOGIN -->
     <p>
       Already have an account?
-      <a routerLink="/user-login">Login</a>
+      <a routerLink="/user-login">
+        Login
+      </a>
     </p>
+
   </div>
+
 </div>

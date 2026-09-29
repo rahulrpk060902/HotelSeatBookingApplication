@@ -30,11 +30,22 @@ export class UserResetPasswordComponent implements OnInit {
 
   email = '';
 
+  showNewPassword = false;
+  showConfirmPassword = false;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {}
+
+  toggleNewPassword(): void {
+  this.showNewPassword = !this.showNewPassword;
+}
+
+toggleConfirmPassword(): void {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 
   ngOnInit(): void {
 

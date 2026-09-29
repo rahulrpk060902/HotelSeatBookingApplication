@@ -70,8 +70,18 @@ export class UserSignupComponent {
   };
 
   errorMessage = '';
+  showPassword = false;
+  showConfirmPassword = false;
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  togglePassword(): void {
+  this.showPassword = !this.showPassword;
+}
+
+toggleConfirmPassword(): void {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 
   signupUser() {
 

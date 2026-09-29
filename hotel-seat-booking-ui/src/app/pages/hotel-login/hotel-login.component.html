@@ -27,17 +27,31 @@
 
 
         <!-- PASSWORD -->
-        <div class="form-group">
+<!-- PASSWORD -->
+<div class="form-group">
 
-          <label>Password</label>
+  <label>Password</label>
 
-          <input
-            type="password"
-            formControlName="password"
-            placeholder="Enter password"
-          />
+  <div class="password-wrapper">
 
-        </div>
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      formControlName="password"
+      placeholder="Enter password"
+    />
+
+    <button
+      type="button"
+      class="password-toggle"
+      (click)="togglePassword()"
+      [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+    >
+      {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+    </button>
+
+  </div>
+
+</div>
 
 
         <!-- LOGIN -->

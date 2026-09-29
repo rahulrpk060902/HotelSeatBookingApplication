@@ -107,31 +107,67 @@
       </small>
 
       <!-- Password -->
-      <input type="password"
-             placeholder="Password"
-             [(ngModel)]="password"
-             name="password"
-             #passwordRef="ngModel"
-             required
-             pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$" />
+      <!-- Password -->
+<div class="password-wrapper">
 
-      <small class="error"
-             *ngIf="passwordRef.invalid && passwordRef.touched">
-        Password must contain:
-        8 characters, uppercase, lowercase, number & special character
-      </small>
+  <input
+    [type]="showPassword ? 'text' : 'password'"
+    placeholder="Password"
+    [(ngModel)]="password"
+    name="password"
+    #passwordRef="ngModel"
+    required
+    pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+  />
 
-      <!-- Confirm Password -->
-      <input type="password"
-             placeholder="Confirm Password"
-             [(ngModel)]="confirmPassword"
-             name="confirmPassword"
-             required />
+  <button
+    type="button"
+    class="password-toggle"
+    (click)="togglePassword()"
+    [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+  >
+    {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+  </button>
 
-      <small class="error"
-             *ngIf="confirmPassword && password !== confirmPassword">
-        Passwords do not match
-      </small>
+</div>
+
+<small
+  class="error"
+  *ngIf="passwordRef.invalid && passwordRef.touched"
+>
+  Password must contain:
+  8 characters, uppercase, lowercase, number & special character
+</small>
+
+
+<!-- Confirm Password -->
+<div class="password-wrapper">
+
+  <input
+    [type]="showConfirmPassword ? 'text' : 'password'"
+    placeholder="Confirm Password"
+    [(ngModel)]="confirmPassword"
+    name="confirmPassword"
+    required
+  />
+
+  <button
+    type="button"
+    class="password-toggle"
+    (click)="toggleConfirmPassword()"
+    [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
+  >
+    {{ showConfirmPassword ? '👁️' : '👁️‍🗨️' }}
+  </button>
+
+</div>
+
+<small
+  class="error"
+  *ngIf="confirmPassword && password !== confirmPassword"
+>
+  Passwords do not match
+</small>
 
       <button type="submit" [disabled]="signupForm.invalid">
         Create Account
