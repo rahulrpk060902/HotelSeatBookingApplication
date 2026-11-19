@@ -58,7 +58,7 @@ AND s.endTime > :startTime
     JOIN s.hotel h
     WHERE s.available = true
       AND ss.booked = false
-      AND ss.startTime > CURRENT_TIMESTAMP
+      AND ss.endTime > CURRENT_TIMESTAMP
     ORDER BY h.hotelName
 """)
     List<AvailableHotelSeatDto> findAllAvailableHotelSeats();
