@@ -4,63 +4,90 @@
 
   <!-- Add Seat Form -->
   <div class="seat-form">
-    <input placeholder="Table Name" [(ngModel)]="seatForm.tableName" />
-    <input type="number" placeholder="Seats" [(ngModel)]="seatForm.seatNumber" />
+
     <input
-  type="datetime-local"
-  [(ngModel)]="seatForm.startTime"
-  [min]="minDateTime"
-  (change)="onStartTimeChange()"
-/>
+      placeholder="Table Name"
+      [(ngModel)]="seatForm.tableName"
+    />
 
-<input
-  type="datetime-local"
-  [(ngModel)]="seatForm.endTime"
-  [min]="seatForm.startTime"
-/>
+    <input
+      type="number"
+      placeholder="Seats"
+      [(ngModel)]="seatForm.seatNumber"
+    />
 
+    <input
+      type="datetime-local"
+      [(ngModel)]="seatForm.startTime"
+      [min]="minDateTime"
+      (change)="onStartTimeChange()"
+    />
 
+    <input
+      type="datetime-local"
+      [(ngModel)]="seatForm.endTime"
+      [min]="seatForm.startTime"
+    />
 
-    <button (click)="addSeat()">Add Seat</button>
+    <button (click)="addSeat()">
+      Add Seat
+    </button>
+
   </div>
 
-  <div class="seat-list" *ngIf="seats.length > 0"> 
+<div class="seat-list" *ngIf="seats.length > 0">
 
   <h3>Created Seats</h3>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Table</th>
-        <th>Seat No</th>
-        <th>Available</th>
-        <th>Time Slots</th>
-      </tr>
-    </thead>
+  <div class="seat-grid">
 
-    <tbody>
-      <tr *ngFor="let seat of seats">
-        <td>{{ seat.tableName }}</td>
-        <td>{{ seat.seatNumber }}</td>
-        <td>
-          <span
-            class="status"
-            [class.available]="seat.available"
-            [class.booked]="!seat.available"
-          >
-            {{ seat.available ? 'Available' : 'Booked' }}
-          </span>
-        </td>
-        <td>
-          <div *ngFor="let s of seat.schedules">
-            {{ s.startTime | date:'short' }} - {{ s.endTime | date:'short' }}
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="seat-card" *ngFor="let seat of seats">
 
-</div>
+    <div class="seat-header">
 
+      <div>
+        <span class="label">Table</span>
+        <strong>{{ seat.tableName }}</strong>
+      </div>
+
+      <div>
+        <span class="label">Seat No</span>
+        <strong>{{ seat.seatNumber }}</strong>
+      </div>
+
+    </div>
+
+    <div class="seat-status">
+      <span
+        class="status"
+        [class.available]="seat.available"
+        [class.booked]="!seat.available"
+      >
+        {{ seat.available ? 'Available' : 'Booked' }}
+      </span>
+    </div>
+
+    <div class="time-section">
+
+      <h4>Time Slots</h4>
+
+      <div
+        class="time-slot"
+        *ngFor="let s of seat.schedules"
+      >
+        <span>
+          {{ s.startTime | date:'short' }}
+        </span>
+
+        <span class="arrow">→</span>
+
+        <span>
+          {{ s.endTime | date:'short' }}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>

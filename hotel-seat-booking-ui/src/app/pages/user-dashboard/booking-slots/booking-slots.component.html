@@ -13,31 +13,116 @@
   </div>
 
   <!-- No Data -->
-  <div *ngIf="!loading && availableSlots.length === 0">
+  <div
+    *ngIf="!loading && availableSlots.length === 0"
+    class="no-data"
+  >
     No slots available.
   </div>
 
-  <!-- Slots List -->
-  <div *ngFor="let slot of availableSlots" class="slot-card">
 
-    <h3>{{ slot.hotelName }}</h3>
-    <p><strong>Place:</strong> {{ slot.place }}</p>
+  <!-- Booking Table -->
+  <div
+    class="booking-table-container"
+    *ngIf="!loading && availableSlots.length > 0"
+  >
 
-    <hr>
+    <table class="booking-table">
 
-    <p><strong>Table:</strong> {{ slot.tableName }}</p>
-    <p><strong>Seats:</strong> {{ slot.seatNumber }}</p>
+      <thead>
+        <tr>
+          <th>HOTEL NAME</th>
+          <th>PLACE</th>
+          <th>TABLE</th>
+          <th>SEATS</th>
+          <th>TIME SLOT</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
 
-    <p>
-      <strong>Time:</strong>
-      {{ slot.startTime | date:'medium' }}
-      -
-      {{ slot.endTime | date:'medium' }}
-    </p>
 
-    <button (click)="bookSlot(slot)">
-      Book Now
-    </button>
+      <tbody>
+
+        <tr *ngFor="let slot of availableSlots">
+
+          <!-- HOTEL -->
+          <td class="hotel-name">
+            {{ slot.hotelName }}
+          </td>
+
+
+          <!-- PLACE -->
+          <td>
+            {{ slot.place }}
+          </td>
+
+
+          <!-- TABLE -->
+          <td class="table-name">
+            {{ slot.tableName }}
+          </td>
+
+
+          <!-- SEATS -->
+          <td class="seat-number">
+            {{ slot.seatNumber }}
+          </td>
+
+
+          <!-- TIME -->
+          <td class="time-slot">
+
+            <span>
+              {{ slot.startTime | date:'MMM d, y, h:mm a' }}
+            </span>
+
+            <span class="arrow">
+              →
+            </span>
+
+            <span>
+              {{ slot.endTime | date:'MMM d, y, h:mm a' }}
+            </span>
+
+          </td>
+
+
+          <!-- BOOK -->
+          <td class="action-cell">
+
+            <button
+              class="book-button"
+              (click)="bookSlot(slot)"
+              [disabled]="bookingLoading"
+            >
+
+              <!-- Spinner -->
+              <span
+                *ngIf="
+                  bookingLoading &&
+                  bookingSlotId === slot.scheduleId
+                "
+                class="spinner"
+              ></span>
+
+
+              <!-- Button text -->
+              {{
+                bookingLoading &&
+                bookingSlotId === slot.scheduleId
+                  ? 'Booking...'
+                  : 'Book Now'
+              }}
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </div>
 

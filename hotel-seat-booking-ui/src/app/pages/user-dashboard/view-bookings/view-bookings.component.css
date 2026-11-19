@@ -1,53 +1,201 @@
 .booking-container {
   width: 100%;
-  padding: 20px 30px;
+  padding: 30px;
   box-sizing: border-box;
+  background: #f5f7fb;
+  min-height: 100vh;
 }
+
+/* Page title */
 
 .booking-container h2 {
-  margin-bottom: 20px;
+  margin: 0 0 25px 0;
   color: #2c3e50;
-  font-size: 38px;
+  font-size: 32px;
+  font-weight: 600;
 }
 
-/* Full Width Booking Card */
-.booking-card {
+
+/* ----------------------------- */
+/* Table Container */
+/* ----------------------------- */
+
+.booking-table-wrapper {
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 22px;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
-  transition: 0.3s;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
   box-sizing: border-box;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+
+  overflow-x: auto;
 }
 
-.booking-card:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+/* ----------------------------- */
+/* Table */
+/* ----------------------------- */
+
+.booking-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
 }
 
-.booking-card h3 {
-  margin-bottom: 12px;
-  color: #2c3e50;
-  font-size: 24px;
+
+/* ----------------------------- */
+/* Header */
+/* ----------------------------- */
+
+.booking-table thead tr {
+  background: #00b894;
 }
 
-.booking-card p {
-  margin: 8px 0;
-  color: #444;
-  font-size: 16px;
+.booking-table th {
+  padding: 18px 16px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-align: left;
+
+  white-space: nowrap;
 }
 
-.booking-card strong {
-  color: #222;
+/* Rounded header corners */
+
+.booking-table th:first-child {
+  border-radius: 9px 0 0 9px;
 }
+
+.booking-table th:last-child {
+  border-radius: 0 9px 9px 0;
+}
+
+
+/* ----------------------------- */
+/* Rows */
+/* ----------------------------- */
+
+.booking-table tbody tr {
+  background: #ffffff;
+
+  transition: 0.2s ease;
+}
+
+.booking-table tbody tr:nth-child(even) {
+  background: #f3f4f6;
+}
+
+.booking-table tbody tr:hover {
+  background: #eafaf6;
+}
+
+
+/* ----------------------------- */
+/* Cells */
+/* ----------------------------- */
+
+.booking-table td {
+  padding: 18px 16px;
+
+  font-size: 15px;
+
+  color: #333;
+
+  border: none;
+
+  vertical-align: middle;
+}
+
+
+/* Rounded row corners */
+
+.booking-table td:first-child {
+  border-radius: 9px 0 0 9px;
+}
+
+.booking-table td:last-child {
+  border-radius: 0 9px 9px 0;
+}
+
+
+/* ----------------------------- */
+/* Hotel Name */
+/* ----------------------------- */
+
+.hotel-name {
+  font-weight: 600;
+  color: #2c3e50 !important;
+}
+
+
+/* ----------------------------- */
+/* Time Slot */
+/* ----------------------------- */
+
+.time-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  white-space: nowrap;
+}
+
+.arrow {
+  color: #00a884;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+/* ----------------------------- */
+/* Loading */
+/* ----------------------------- */
 
 .loading {
-  color: blue;
+  padding: 25px;
+
+  color: #2563eb;
+
   font-size: 16px;
 }
 
-.error {
-  color: red;
-  font-size: 16px;
+
+/* ----------------------------- */
+/* No Bookings */
+/* ----------------------------- */
+
+.no-bookings {
+  background: #ffffff;
+
+  padding: 35px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: #666;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ----------------------------- */
+/* Responsive */
+/* ----------------------------- */
+
+@media (max-width: 900px) {
+
+  .booking-container {
+    padding: 20px;
+  }
+
+  .booking-table {
+    min-width: 750px;
+  }
+
 }

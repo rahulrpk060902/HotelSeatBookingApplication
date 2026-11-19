@@ -15,6 +15,8 @@ export class BookingSlotsComponent implements OnInit {
   availableSlots: any[] = [];
   loading: boolean = false;
   errorMessage: string = '';
+  bookingLoading = false;
+  bookingSlotId: string | null = null;
 
   constructor(private userService: UserProfileService) {}
 
@@ -47,17 +49,39 @@ export class BookingSlotsComponent implements OnInit {
     return;
   }
 
+  // Start loading
+  this.bookingLoading = true;
+  this.bookingSlotId = scheduleId;
+
   this.userService.bookSlot(scheduleId).subscribe({
+
     next: (response: any) => {
+
       console.log("Booking success", response);
+
       alert("Seat booked successfully!");
+
+      // Refresh available slots
       this.loadAvailableSlots();
+
+      // Stop loading
+      this.bookingLoading = false;
+      this.bookingSlotId = null;
     },
+
     error: (error: any) => {
+
       console.error("Booking failed", error);
+
       alert("Booking failed!");
+
+      // Stop loading
+      this.bookingLoading = false;
+      this.bookingSlotId = null;
     }
+
   });
+
 
 }
 
